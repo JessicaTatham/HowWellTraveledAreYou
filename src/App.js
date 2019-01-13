@@ -32,10 +32,6 @@ class App extends React.Component {
 		}
 	}
 
-	calculateTravel(event) {
-		event.preventDefault();
-	}
-
 	render() {
 
 		let percentOfWorld = '0';
