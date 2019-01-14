@@ -11,8 +11,7 @@ class App extends React.Component {
 
 		this.onSubmit = this.onSubmit.bind(this);
 		this.onChange = this.onChange.bind(this);
-		this.calculateTravel = this.calculateTravel.bind(this)
-;	}
+	}
 
 	onChange(event) {
 		this.setState({
@@ -28,7 +27,10 @@ class App extends React.Component {
 		} else {
 			let updatedCountries = this.state.countries;
 			updatedCountries.push(this.state.country);
-			this.setState({countries: updatedCountries});
+			this.setState({
+				countries: updatedCountries,
+				country: ''
+			});
 		}
 	}
 
@@ -52,6 +54,9 @@ class App extends React.Component {
 				</form>
 
 				<p>You have traveled to {percentOfWorld} % of the world</p>
+
+				{this.state.countries ? <ol>{this.state.countries.map(function(c) { return <li> {c} </li> })}</ol> : '' }
+
 
 			</div>
 
