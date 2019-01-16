@@ -1,4 +1,5 @@
 import React from 'react';
+import Country from './Country';
 
 class App extends React.Component {
 
@@ -55,8 +56,7 @@ class App extends React.Component {
 
 				<p>You have traveled to {percentOfWorld} % of the world</p>
 
-				{this.state.countries ? <ol>{this.state.countries.map(function(c) { return <li> {c} </li> })}</ol> : '' }
-
+				{this.state.countries ? <ol>{this.state.countries.map(function(c) { return <Country key={c} name={c} /> })}</ol> : '' }
 
 			</div>
 
