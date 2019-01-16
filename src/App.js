@@ -7,11 +7,27 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			country: '',
-			countries: []
+			countriesVisited: [],
+			countries: null
 		};
 
 		this.onSubmit = this.onSubmit.bind(this);
 		this.onChange = this.onChange.bind(this);
+		this.checkCountry = this.checkCountry.bind(this);
+	}
+
+	componentDidMount() {
+		fetch('https://restcountries.eu/rest/v2/all', {
+			      method: "GET",
+			    })
+	    .then(results => {
+	      results.json().then(json => {
+	        this.setState({
+	          countries: json
+	        })
+	        console.log(json);
+	      })   
+	    })
 	}
 
 	onChange(event) {
@@ -22,27 +38,51 @@ class App extends React.Component {
 
 	onSubmit(event) {
 		event.preventDefault();
-		const duplicate = this.state.countries.indexOf(this.state.country);
-		if (duplicate > -1) {
-			alert('This country has already been added to your list.');
-		} else {
-			let updatedCountries = this.state.countries;
+		const legit = this.checkCountry(this.state.country);
+		if (legit) {
+			let updatedCountries = this.state.countriesVisited;
 			updatedCountries.push(this.state.country);
 			this.setState({
-				countries: updatedCountries,
+				countriesVisited: updatedCountries,
 				country: ''
 			});
 		}
 	}
 
-	render() {
+	checkCountry(country) {
 
-		let percentOfWorld = '0';
-		if (this.state.countries.length > 0) {
-			percentOfWorld = this.state.countries.length / 195 * 100;
-			percentOfWorld = percentOfWorld.toFixed(2);
+		//check if country is a duplicate
+		const duplicate = this.state.countriesVisited.indexOf(country);
+		if (duplicate > -1) {
+			alert('This country has already been added to your list.');
+			return false;
 		}
 
+		//check if country name exists
+		const legitCountry = this.state.countries.filter(function(c) {
+			return c.name === country;
+		})
+
+		if(legitCountry.length === 0) {
+			return false;
+		}
+	}
+
+	checkPercentageOfWorld() {
+		if (this.state.countriesVisited.length > 0) {
+			let worldPercent;
+			worldPercent = this.state.ccountriesVisited.length / 195 * 100;
+			worldPercent = worldPercent.toFixed(2);
+			return worldPercent;
+		} else {
+			return '0';
+		}
+	}
+
+	render() {
+
+		const percentOfWorld = this.checkPercentageOfWorld();
+	
 		return (
 			<div>
 				<h1> How Well Traveled Are You? </h1>
@@ -56,7 +96,7 @@ class App extends React.Component {
 
 				<p>You have traveled to {percentOfWorld} % of the world</p>
 
-				{this.state.countries ? <ol>{this.state.countries.map(function(c) { return <Country key={c} name={c} /> })}</ol> : '' }
+				{this.state.countriesVisited ? <ol>{this.state.countriesVisited.map(function(c) { return <Country key={c} name={c} /> })}</ol> : '' }
 
 			</div>
 

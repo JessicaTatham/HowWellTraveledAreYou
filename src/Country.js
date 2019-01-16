@@ -6,11 +6,31 @@ class Country extends React.Component {
 		super(props);
 	}
 
+	componentWillMount() {
+		this.getCountryFlag();
+	}
+
+	getCountryFlag() {
+		const url = 'https://restcountries.eu/rest/v2/name/' + this.props.name + '?fullText=true';
+		fetch(url, {
+	      method: "GET",
+	    })
+	    .then(results => {
+	      results.json().then(json => {
+	        this.setState({
+	          countryInfo: json
+	        })
+	        console.log(json);
+	      })   
+	    })
+
+	}
+
 	render() {
+
 		return (
 			<div>
-				<li> {this.props.name} </li>
-
+				<li> {this.props.name} <img src={this.state.countryInfo.flag} /></li>
 			</div>
 
 		)
