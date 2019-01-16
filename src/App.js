@@ -1,5 +1,5 @@
 import React from 'react';
-import Country from './Country';
+import CountryList from './CountryList';
 
 class App extends React.Component {
 
@@ -8,7 +8,8 @@ class App extends React.Component {
 		this.state = {
 			country: '',
 			countriesVisited: [],
-			countries: null
+			countries: null,
+			validation: ''
 		};
 
 		this.onSubmit = this.onSubmit.bind(this);
@@ -25,26 +26,30 @@ class App extends React.Component {
 	        this.setState({
 	          countries: json
 	        })
-	        console.log(json);
 	      })   
 	    })
 	}
 
 	onChange(event) {
 		this.setState({
-	      country: event.target.value
+	      country: event.target.value,
+	      validation: ''
 	    }); 
 	}
 
 	onSubmit(event) {
 		event.preventDefault();
 		const legit = this.checkCountry(this.state.country);
-		if (legit) {
+		if (legit === true) {
 			let updatedCountries = this.state.countriesVisited;
 			updatedCountries.push(this.state.country);
 			this.setState({
 				countriesVisited: updatedCountries,
 				country: ''
+			});
+		} else {
+			this.setState({
+				validation: legit
 			});
 		}
 	}
@@ -55,7 +60,7 @@ class App extends React.Component {
 		const duplicate = this.state.countriesVisited.indexOf(country);
 		if (duplicate > -1) {
 			alert('This country has already been added to your list.');
-			return false;
+			return 'This country has already been added to your list.';
 		}
 
 		//check if country name exists
@@ -64,14 +69,16 @@ class App extends React.Component {
 		})
 
 		if(legitCountry.length === 0) {
-			return false;
+			return 'This country is not recognized as a valid world country';
 		}
+
+		return true;
 	}
 
 	checkPercentageOfWorld() {
 		if (this.state.countriesVisited.length > 0) {
 			let worldPercent;
-			worldPercent = this.state.ccountriesVisited.length / 195 * 100;
+			worldPercent = this.state.countriesVisited.length / 195 * 100;
 			worldPercent = worldPercent.toFixed(2);
 			return worldPercent;
 		} else {
@@ -82,9 +89,12 @@ class App extends React.Component {
 	render() {
 
 		const percentOfWorld = this.checkPercentageOfWorld();
-	
+
 		return (
 			<div>
+
+				<div id='validationBlock'>{this.state.validation}</div>
+
 				<h1> How Well Traveled Are You? </h1>
 
 				<p> Enter in the countries you have visited</p>
@@ -96,7 +106,7 @@ class App extends React.Component {
 
 				<p>You have traveled to {percentOfWorld} % of the world</p>
 
-				{this.state.countriesVisited ? <ol>{this.state.countriesVisited.map(function(c) { return <Country key={c} name={c} /> })}</ol> : '' }
+				<CountryList countriesVisited={this.state.countriesVisited} countries={this.state.countries} />
 
 			</div>
 
