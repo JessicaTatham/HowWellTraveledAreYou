@@ -107,7 +107,7 @@ class App extends React.Component {
 					<input type='submit' value='Add Country'/>
 				</form>
 
-				<p id='percentOfWorld'>You have traveled to {percentOfWorld} % of the world</p>
+				<p id='percentOfWorld'>You have traveled to {percentOfWorld}% of the world</p>
 
 				<CountryList countriesVisited={this.state.countriesVisited} countries={this.state.countries} />
 
