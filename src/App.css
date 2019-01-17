@@ -1,3 +1,71 @@
+body {
+	background-image: url('../img/map.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	font-family: 'courier new'
+}
+
+h1 {
+	background-image: url('../img/brush-stroke-banner-7.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+	color: white;
+	text-align: center;
+	width: 100%;
+	margin-left: 4%;
+}
+
+p {
+	color: white;
+	font-weight: bold;
+	background-color: black;
+	padding: 8px;
+	border-radius: 1px;
+}
+
+#main {
+	width: 40%;
+	margin-left: 27%;
+	margin-top: 13%;
+	border: 12px solid white;
+	border-radius: 4px;
+	padding: 5%;
+
+}
+
+#validationBlock {
+	background-color: #ff6961;
+	border-radius: 4px;
+	width: 100%;
+	padding: 10px;
+}
+
+input[type=text] {
+	width: 98%;
+	padding: 5px;
+	border-radius: 3px;
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+	border: 2px solid black;
+}
+
+input[type=submit] {
+	width: 50%;
+	padding: 5px;
+	border-radius: 3px;
+	float: right;
+	margin-top:  25px;
+	height: 52px;
+	border: 2px solid black;
+
+}
+
 .country img {
 	width: 20px;
+}
+
+#percentOfWorld {
+	margin-top: 25px;
+	width: 45%;
 }

@@ -56,11 +56,14 @@ class App extends React.Component {
 
 	checkCountry(country) {
 
+		if (country.length < 1) {
+			return "Please enter in a country";
+		}
+
 		//check if country is a duplicate
 		const duplicate = this.state.countriesVisited.indexOf(country);
 		if (duplicate > -1) {
-			alert('This country has already been added to your list.');
-			return 'This country has already been added to your list.';
+			return "This country has already been added to your list.";
 		}
 
 		//check if country name exists
@@ -68,8 +71,8 @@ class App extends React.Component {
 			return c.name === country;
 		})
 
-		if(legitCountry.length === 0) {
-			return 'This country is not recognized as a valid world country';
+		if (legitCountry.length === 0) {
+			return "This country is not recognized as a valid world country.";
 		}
 
 		return true;
@@ -91,20 +94,20 @@ class App extends React.Component {
 		const percentOfWorld = this.checkPercentageOfWorld();
 
 		return (
-			<div>
+			<div id='main'>
 
-				<div id='validationBlock'>{this.state.validation}</div>
+				{this.state.validation ? <div id='validationBlock'>{this.state.validation}</div> : ''}
 
 				<h1> How Well Traveled Are You? </h1>
 
-				<p> Enter in the countries you have visited</p>
+				<p> Enter the full name of countries you have visited</p>
 
 				<form onSubmit={this.onSubmit} >
 					<input type='text' placeholder='Country name' value={this.state.country} onChange={this.onChange} />
 					<input type='submit' value='Add Country'/>
 				</form>
 
-				<p>You have traveled to {percentOfWorld} % of the world</p>
+				<p id='percentOfWorld'>You have traveled to {percentOfWorld} % of the world</p>
 
 				<CountryList countriesVisited={this.state.countriesVisited} countries={this.state.countries} />
 
